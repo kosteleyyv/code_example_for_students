@@ -298,7 +298,6 @@ void MainWindow::on_makeTaylorSeries_clicked()
            xResPlot.push_back(i);
 
            double expValue=0.0;
-           double factorial=1.0;
            int eps=(int)ui->taylorSpinBox->value();
 
            for(int j=0;j<=eps;j++)
@@ -346,8 +345,9 @@ void MainWindow::on_makeLagrangePolynomial_clicked()
         return;
     }
 
+
     for(double k=sortedXPlot[0];k<=sortedXPlot[sortedXPlot.size()-1];k+=0.01)
-    {
+    {        
         int start=0;
         int end=sortedXPlot.size()-1;
 
@@ -373,6 +373,8 @@ void MainWindow::on_makeLagrangePolynomial_clicked()
                         end=sortedXPlot.size()-1;
                     }
                 }
+
+                break;
             }
         }
 
@@ -498,96 +500,25 @@ void MainWindow::on_makeTaylorSeries_2_clicked()
     xResPlot.clear();
     yResPlot.clear();
 
-//    QVector<double> a={10, 5, 2.5, 1,  0.5};
-//    QVector<double> w={0.5,1, 3,   5,  10};
-//    QVector<double> q={1,  4, 0,   0.5,1};
+    QVector<double> a={10, 5, 2.5, 1,  0.5};
+    QVector<double> w={0.5,1, 3,   5,  10};
+    QVector<double> q={1,  4, 0,   0.5,1};
 
-//    int n=ui->lsPolinomeDegree_2->value();
+    int n=ui->lsPolinomeDegree_2->value();
 
-//    for(double i=-10;i<=10;i+=0.1)
-//    {
-//        xResPlot.push_back(i);
-//        double value=0.0;
-//        for(int j=0;j<n;j++)
-//        {
-//          value+=a[j]*cos(w[j]*i+q[j]);
-//        }
-
-//        yResPlot.push_back(value);
-//    }
-
-
-//double p=100;
-//    for(double q=-p;q<=p;q+=0.001)
-//    {
-//        double SD=0.0;
-//        double dist=0.0;
-//        double w=2*M_PI/(p);
-//        double sum=0;
-
-//        for(double i=-p;i<=p;i+=1)
-//        {
-//          dist+=(fabs(sin(w*i))-fabs(sin(w*(i+q))))*(fabs(sin(w*i))-fabs(sin(w*(i+q))));
-//          SD+=sin(w*(i+q))*sin(w*(i+q));
-
-
-////                  xResPlot.push_back(i);
-////                  yResPlot.push_back(fabs(sin(w*i)));
-////                  xPlot.push_back(i);
-////                  yPlot.push_back(fabs(fabs(sin(w*i))-fabs(sin(w*(i+p/4)))));
-//        }
-//        SD=/*sqrt(*/SD/((p*2+1))/*)*/;
-
-
-
-//        xPlot.push_back(q);
-//        yPlot.push_back(SD);
-
-////        dist/=SD*SD*0.4*(p*2+1)*2;
-//        xResPlot.push_back(q);
-//        yResPlot.push_back(dist/(p*2+1));
-//    }
-
-    double main1=-1;
-    for(double ff=1;ff<=5;ff+=0.01)
+    for(double i=-30;i<=30;i+=0.1)
     {
-        double integral=0.0;
-        double h=0.0001;
-        double T=10;
-
-        double f=T/4.0;
-        double w=2*M_PI/T;
-
-        for(double i=h;i<=ff*T;i+=h)
+        xResPlot.push_back(i);
+        double value=0.0;
+        for(int j=0;j<n;j++)
         {
-//            integral+=h*(func(w,i,f,1,1)+func(w,i-h,f,1,1))/(2.0);
-            integral+=h*(sin(w*i)*sin(w*i)+sin(w*(i-h))*sin(w*(i-h)))/2.0;
+          value+=a[j]*cos(w[j]*i+q[j]);
         }
 
-        for(double i=h;i<=ff*T;i+=h)
-        {
-//            integral+=h*(func(w,i,f,1,1)+func(w,i-h,f,1,1))/(2.0);
-            integral+=h*(2*2*sin(w*i)*sin(w*i)+2*2*sin(w*(i-h))*sin(w*(i-h)))/2.0;
-        }
-
-        integral/=2*ff*T;
-
-        if(main1==-1)
-        {
-            main1=integral;
-        }
-
-
-
-
-        xResPlot.push_back(ff);
-        yResPlot.push_back(integral);
-
-        xPlot.push_back(ff);
-        yPlot.push_back(integral/main1);
-
-
-
+        yResPlot.push_back(value);
     }
+
+
+
     Redraw();
 }
